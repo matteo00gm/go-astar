@@ -66,7 +66,7 @@ func (a *Astar) getNeighbors(p Coords) []Coords {
 
 func (a *Astar) FindPath(start, end Coords) []Coords {
 
-	openSet := make(PriorityQueue, 0)
+	openSet := make(priorityQueue, 0)
 	openMap := make(map[Coords]*node)
 	closedSet := make(map[Coords]struct{})
 
