@@ -4,15 +4,15 @@ import (
 	"container/heap"
 )
 
-type astar struct {
+type Astar struct {
 	grid [][]int
 	rows int
 	cols int
 	h    Heuristic
 }
 
-func New(grid [][]int, h Heuristic) *astar {
-	return &astar{
+func New(grid [][]int, h Heuristic) *Astar {
+	return &Astar{
 		grid: grid,
 		h:    h,
 		rows: len(grid),
@@ -20,11 +20,11 @@ func New(grid [][]int, h Heuristic) *astar {
 	}
 }
 
-func (a *astar) isWalkable(row, col int) bool {
+func (a *Astar) isWalkable(row, col int) bool {
 	return row >= 0 && row < a.rows && col >= 0 && col < a.cols && a.grid[row][col] == 0
 }
 
-func (a *astar) getNeighbors(p Coords) []Coords {
+func (a *Astar) getNeighbors(p Coords) []Coords {
 	neighbors := make([]Coords, 0)
 	row := p.Y
 	col := p.X
@@ -64,7 +64,7 @@ func (a *astar) getNeighbors(p Coords) []Coords {
 	return neighbors
 }
 
-func (a *astar) FindPath(start, end Coords) []Coords {
+func (a *Astar) FindPath(start, end Coords) []Coords {
 
 	openSet := make(PriorityQueue, 0)
 	openMap := make(map[Coords]*node)
