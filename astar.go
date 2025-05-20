@@ -4,6 +4,10 @@ import (
 	"container/heap"
 )
 
+const (
+	mov_cost = 1.0
+)
+
 type Astar struct {
 	grid [][]int
 	rows int
@@ -95,7 +99,7 @@ func (a *Astar) FindPath(start, end Coords) (bool, []Coords) {
 			if found {
 				continue
 			}
-			tentativeG := current.g_cost + 1.0
+			tentativeG := current.g_cost + mov_cost
 
 			neighbor, found := openMap[neighborPos]
 
