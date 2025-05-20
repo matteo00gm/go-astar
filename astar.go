@@ -64,7 +64,7 @@ func (a *Astar) getNeighbors(p Coords) []Coords {
 	return neighbors
 }
 
-func (a *Astar) FindPath(start, end Coords) []Coords {
+func (a *Astar) FindPath(start, end Coords) (bool, []Coords) {
 
 	openSet := make(priorityQueue, 0)
 	openMap := make(map[Coords]*node)
@@ -73,7 +73,7 @@ func (a *Astar) FindPath(start, end Coords) []Coords {
 	startNode := &node{
 		position: start,
 		g_cost:   0,
-		h_cost:   a.h.estimate(start, end),
+		h_cost:   float32(a.h.estimate(start, end)),
 	}
 
 	heap.Init(&openSet)
@@ -85,7 +85,7 @@ func (a *Astar) FindPath(start, end Coords) []Coords {
 		current := heap.Pop(&openSet).(*node) //openSet.Pop().(*node)
 
 		if current.position == end {
-			return reconstructPath(current)
+			return true, reconstructPath(current)
 		}
 
 		closedSet[current.position] = struct{}{}
@@ -103,7 +103,7 @@ func (a *Astar) FindPath(start, end Coords) []Coords {
 				neighbor = &node{
 					position: neighborPos,
 					g_cost:   tentativeG,
-					h_cost:   a.h.estimate(neighborPos, end),
+					h_cost:   float32(a.h.estimate(neighborPos, end)),
 					parent:   current,
 				}
 				neighbor.f_cost = neighbor.g_cost + neighbor.h_cost
@@ -119,7 +119,7 @@ func (a *Astar) FindPath(start, end Coords) []Coords {
 			}
 		}
 	}
-	return nil
+	return false, nil
 }
 
 func reconstructPath(node *node) []Coords {

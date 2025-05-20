@@ -69,14 +69,14 @@ func TestFindPath(t *testing.T) {
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
 			astar := New(test.grid, &EuclideanHeuristic{})
-			got := astar.FindPath(test.start, test.goal)
+			found, got := astar.FindPath(test.start, test.goal)
 
 			if test.expectPathFound {
-				if len(got) == 0 {
+				if !found {
 					t.Errorf("Expected a non-empty path for case '%s', but got an empty slice", test.name)
 				}
 			} else {
-				if len(got) > 0 {
+				if found {
 					t.Errorf("Expected no path found for case '%s', but got a path of length %d", test.name, len(got))
 				}
 			}
@@ -121,7 +121,7 @@ func TestBestPath(t *testing.T) {
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
 			astar := New(test.grid, &EuclideanHeuristic{})
-			got := astar.FindPath(test.start, test.goal)
+			_, got := astar.FindPath(test.start, test.goal)
 
 			if !slices.Equal(got, test.expected) {
 				t.Errorf("got %v, want %v", got, test.expected)
