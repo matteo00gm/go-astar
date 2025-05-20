@@ -2,6 +2,9 @@
 
 This project provides a Go implementation of the A\* search algorithm for finding the shortest path on a 2D grid. It supports both orthogonal (up, down, left, right) and diagonal movements.
 
+## Projects using this library
+* github.com/matteo00gm/chase-game
+
 ## Algorithm Overview
 
 The A\* algorithm is an informed search algorithm that efficiently finds the shortest path between two points in a graph or grid. It uses a heuristic function to estimate the cost from the current node to the goal, guiding the search towards the target.
